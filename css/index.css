@@ -1,0 +1,163 @@
+html {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+body section {
+  height: 100%;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body #left {
+  background: -webkit-gradient(linear, left top, left bottom, from(#424add), to(#232471));
+  background: linear-gradient(#424add, #232471);
+  color: #fff;
+  text-align: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body #left .logo {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  padding: 1rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+body #left .content {
+  width: 80%;
+  margin: 0 auto;
+}
+
+body #left .content h1 {
+  font-weight: 400;
+  margin: 0;
+}
+
+body #left .content h5 {
+  font-weight: 200;
+  line-height: 1.3rem;
+}
+
+body #left .copyright {
+  padding: 1rem;
+  font-weight: 200;
+  color: #afafaf;
+  font-size: .8rem;
+}
+
+body #right {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body #right .content {
+  min-width: 50%;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+body #right .content .greenHr {
+  width: 7rem;
+  height: .17rem;
+  border: none;
+  background-color: #46d346;
+  text-align: left;
+  margin-left: 0;
+  display: none;
+}
+
+body #right .content .pagination {
+  padding-top: 1rem;
+  color: #afafaf;
+}
+
+body #right .content form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body #right .content form div {
+  padding-top: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body #right .content form div input[type=checkbox] {
+  width: 2rem;
+  height: 2rem;
+}
+
+body #right .content form div input[type=checkbox]:hover {
+  cursor: pointer;
+}
+
+body #right .content form div label {
+  padding-left: 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+body #right .content form input[type=text], body #right .content form input[type=email] {
+  margin-bottom: 1rem;
+}
+
+body #right .content form .greyHr {
+  width: 100%;
+  height: .08rem;
+  border: none;
+  background-color: #afafaf;
+  opacity: .2;
+  margin: 2rem 0 2rem 0;
+}
+
+body #right .content form input[type=submit] {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  padding: .6rem 1.7rem .6rem 1.7rem;
+  background-color: #424add;
+  color: #fff;
+  border: none;
+}
+
+body #right .content form input[type=submit]:hover {
+  cursor: pointer;
+}
+
+body #right .content form input[type], body #right .content form select {
+  padding: .5rem;
+  font-size: 1.2rem;
+  border: #c9c9c9 1px solid;
+  border-radius: .2rem;
+}
+
+.hide {
+  display: none !important;
+}
+/*# sourceMappingURL=index.css.map */
