@@ -1,17 +1,18 @@
 // Consts, variables
 
-const activitiesUrl = 'http://18.193.250.181:1337/api/activities'
-const countriesUrl = 'http://18.193.250.181:1337/api/countries'
-const peopleUrl = 'http://18.193.250.181:1337/api/people'
+const activitiesUrl = 'http://18.193.250.181:1337/api/activities?populate=*'
+const countriesUrl = 'http://18.193.250.181:1337/api/countries?populate=*'
+const peopleUrl = 'http://18.193.250.181:1337/api/people?populate=*'
+const deletePeopleUrl = 'http://18.193.250.181:1337/api/people/'
 
-const rightSideContent = document.querySelector('#right > .content')
+const rightSideContent = document.querySelector('#right  .content')
 const formActivities = document.forms.activitiesForm
 const formDetails = document.forms.details
-const formPagination = document.querySelector('#right > .content > .pagination')
-const formQuestion = document.querySelector('#right > .content > h3')
+const formPagination = document.querySelector('#right  .content  .pagination')
+const formQuestion = document.querySelector('#right  .content  h3')
 const greenSeperator = document.querySelector('#right .content .greenHr')
 const detailsConfirmation = document.querySelector('.detailsConfirmation')
-// const table = document.querySelector('tbody')
+const lastNote = document.getElementById('lastNote')
 
 let userID
 
@@ -191,6 +192,9 @@ formDetails.addEventListener('submit', e => {
     const confirmEmail = document.getElementById('confirmEmail')
     const confirmCountry = document.getElementById('confirmCountry')
 
+    formPagination.textContent = '3/5'
+    formQuestion.textContent = 'Are these details correct?'
+
     data.forEach(item => {
       confirmFirstName.textContent = item.attributes.first_name
       confirmLastName.textContent = item.attributes.last_name
@@ -200,14 +204,14 @@ formDetails.addEventListener('submit', e => {
   }
 
   const deleteUserBtn = document.getElementById('deleteUser')
-  const confirmUserBtn = document.getElementById('deleteUser')
+  const confirmUserBtn = document.getElementById('confirmUser')
 
   // Delete user
 
   deleteUserBtn.addEventListener('click', async () => {
     try {
       const res = await fetch(
-        `${peopleUrl}?filters[id][$eq]=${localStorage.getItem('userID')}`,
+        `${deletePeopleUrl}${localStorage.getItem('userID')}`,
         {
           method: 'DELETE'
         }
@@ -219,6 +223,16 @@ formDetails.addEventListener('submit', e => {
       console.log(err.message)
       rightSideContent.innerHTML = err.message || 'Something went wrong'
     }
+  })
+
+  // Confirm User
+
+  confirmUserBtn.addEventListener('click', () => {
+    formPagination.textContent = '4/5'
+    detailsConfirmation.classList.add('hide')
+    formQuestion.textContent = 'Please check your email'
+    lastNote.classList.remove('hide')
+    greenSeperator.style.width = '100%'
   })
 })
 
