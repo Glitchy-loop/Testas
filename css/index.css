@@ -50,8 +50,8 @@ body #left .content h1 {
   margin: 0;
 }
 
-body #left .content h5 {
-  font-weight: 200;
+body #left .content h4 {
+  font-weight: 300;
   line-height: 1.3rem;
 }
 
@@ -72,6 +72,30 @@ body #right .content {
   min-width: 50%;
   max-width: 80%;
   margin: 0 auto;
+}
+
+body #right .content .primary {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  padding: .6rem 1.7rem .6rem 1.7rem;
+  background-color: #424add;
+  color: #fff;
+  border: none;
+  border-radius: .2rem;
+  font-weight: 500;
+}
+
+body #right .content .primary:hover {
+  cursor: pointer;
+}
+
+body #right .content .greyHr {
+  width: 100%;
+  height: .08rem;
+  border: none;
+  background-color: #afafaf;
+  opacity: .2;
+  margin: 2rem 0 2rem 0;
 }
 
 body #right .content .greenHr {
@@ -128,33 +152,26 @@ body #right .content form input[type=text], body #right .content form input[type
   margin-bottom: 1rem;
 }
 
-body #right .content form .greyHr {
-  width: 100%;
-  height: .08rem;
-  border: none;
-  background-color: #afafaf;
-  opacity: .2;
-  margin: 2rem 0 2rem 0;
-}
-
-body #right .content form input[type=submit] {
-  -ms-flex-item-align: end;
-      align-self: flex-end;
-  padding: .6rem 1.7rem .6rem 1.7rem;
-  background-color: #424add;
-  color: #fff;
-  border: none;
-}
-
-body #right .content form input[type=submit]:hover {
-  cursor: pointer;
-}
-
 body #right .content form input[type], body #right .content form select {
   padding: .5rem;
   font-size: 1.2rem;
   border: #c9c9c9 1px solid;
   border-radius: .2rem;
+}
+
+body #right .content .detailsConfirmation h5 {
+  color: #afafaf;
+}
+
+body #right .content .detailsConfirmation table {
+  width: 80%;
+  font-weight: 600;
+  color: #2e2e2e;
+}
+
+body #right .content .detailsConfirmation .buttons :first-child {
+  background-color: #e7e7e7;
+  color: #2e2e2e;
 }
 
 .hide {

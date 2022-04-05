@@ -42,8 +42,8 @@ body {
                 margin:0;
             }
 
-            h5 {
-                font-weight: 200;
+            h4 {
+                font-weight: 300;
                 line-height: 1.3rem;
             }
         }
@@ -65,6 +65,29 @@ body {
             min-width: 50%;
             max-width: 80%;
             margin:0 auto;
+
+            .primary  {
+                align-self: flex-end;
+                padding:.6rem 1.7rem .6rem 1.7rem;
+                background-color: $primary;
+                color:#fff;
+                border:none;
+                border-radius: .2rem;
+                font-weight: 500;    
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+    
+            .greyHr {
+                width: 100%;
+                height: .08rem;
+                border:none;
+                background-color: $grey;
+                opacity: .2;
+                margin:2rem 0 2rem 0;
+            }
 
             .greenHr {
                 width: 7rem;
@@ -103,38 +126,39 @@ body {
                         font-size:1.2rem;
                         font-weight: 500;
                     }
-
                 }
+
                 input[type=text], input[type=email] {
                     margin-bottom:1rem;
                 }
 
-                .greyHr {
-                    width: 100%;
-                    height: .08rem;
-                    border:none;
-                    background-color: $grey;
-                    opacity: .2;
-                    margin:2rem 0 2rem 0;
-                }
-
-                input[type=submit] {
-                    align-self: flex-end;
-                    padding:.6rem 1.7rem .6rem 1.7rem;
-                    background-color: $primary;
-                    color:#fff;
-                    border:none;
-                
-
-                    &:hover {
-                        cursor: pointer;
-                    }
-                }
                 input[type], select {
                     padding:.5rem;
                     font-size:1.2rem;
                     border:#c9c9c9 1px solid;
                     border-radius: .2rem;
+                }
+            }
+
+            .detailsConfirmation {
+   
+                h5 {
+                    color:$grey;
+                }
+
+                table {
+                    width: 80%;
+
+                    font-weight: 600;
+                    color:#2e2e2e;
+                }
+
+               .buttons {
+
+                   :first-child {
+                    background-color: #e7e7e7;
+                    color:#2e2e2e;
+                   }
                 }
             }
         }

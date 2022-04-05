@@ -1,0 +1,126 @@
+// Colors
+$primary : #424add;
+$grey : #afafaf;
+$boxShadow : 0px 3px 10px -1px #00000017;
+
+html {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #eef3ff;
+}
+
+header {
+    display:flex;
+    margin:1rem;
+    height: 7rem;
+
+    .container:not(:last-child) {
+        margin-right:.8rem;
+    }
+
+    .container {
+        box-shadow:$boxShadow;
+        border-radius: .5rem;
+        flex:1;
+        background-color: #fff;
+        display:flex;
+        align-items: center;
+        padding-left:1rem;
+        padding-right:1rem;
+
+        i {
+            font-size:1.5rem;
+            color:$primary;
+        }
+
+        .stats {
+            display:block;
+            padding-left:1.5rem;
+
+            :first-child {
+                font-size:1.8rem;
+                font-weight: 700;
+            }
+            p {
+                font-size:.7rem;
+                font-weight: 500;
+                margin:0;
+                padding-top:.2rem;
+            }
+        }
+    }
+}
+
+.content {
+    box-shadow:$boxShadow;
+    background-color: #fff;
+    margin:1rem;
+    border-radius: .5rem;
+    
+    h3 {
+        padding:1rem 0 0 1rem;
+    }
+
+    .searchBar {
+        padding:2rem;
+ 
+        input {
+            width: 70%;
+            border-radius: .5rem;
+            padding:.7rem;
+            outline:none;
+            box-shadow: $boxShadow;
+            border:1px solid #dadadada;
+        }
+        select {
+            width: 29%;
+            border-radius: .5rem;
+            padding:.7rem;
+            outline:none;
+            box-shadow: $boxShadow;
+            border:1px solid #dadadada;
+        }
+    }
+
+
+        .users {
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll;
+    
+            .user {
+                padding:1.5rem;
+                display:flex;
+                align-items: center;
+    
+                .initials {
+                    width: 2rem;
+                    height: 2rem;
+                    box-shadow: $boxShadow;
+                    display:flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    font-size:.8rem;
+                    font-weight: 700;
+                    color:$primary;
+                }
+    
+                .details {
+                    margin-left:2rem;
+                    
+                    .fullName {
+                        font-weight: 700;
+                    }
+                }
+            }
+            .country {
+                align-self: center;
+                margin-left: auto;
+                padding-right:22%;
+            }
+    }
+}

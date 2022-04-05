@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testas - dashboard</title>
+
+    <!-- Font -->
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- CSS -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+  </head>
+  <body>
+    <!-- Header -->
+
+    <header>
+      <div class="container">
+        <i class="fa-solid fa-eye"></i>
+        <div class="stats">
+          <div id="visitors">6500</div>
+          <p>Visitors</p>
+        </div>
+      </div>
+      <div class="container">
+        <i class="fa-solid fa-circle-check"></i>
+        <div class="stats">
+          <div id="signups">4500</div>
+          <p>Signups</p>
+        </div>
+      </div>
+      <div class="container">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="stats">
+          <div id="signupCountries">75</div>
+          <p>Sigup Countries</p>
+        </div>
+      </div>
+      <div class="container">
+        <i class="fa-solid fa-folder-closed"></i>
+        <div class="stats">
+          <div id="signupCountries">2</div>
+          <p>Names that are not capitalized</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+
+    <div class="content">
+      <h3>Signups</h3>
+      <!-- SearchBar -->
+      <div class="searchBar">
+        <input
+          type="search"
+          name="searchName"
+          placeholder="Search (back-end)"
+        />
+        <select name="country"></select>
+      </div>
+      <!-- Users -->
+      <div class="data">
+        <div class="users">
+          <div class="user">
+            <div class="initials">PS</div>
+            <div class="details">
+              <div class="fullName">Petras SLekys</div>
+              <div class="email">petras@petras.lt</div>
+            </div>
+            <div class="country">Lithuania</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script -->
+
+    <script src="./js/dashboard.js"></script>
+  </body>
+</html>
