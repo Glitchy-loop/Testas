@@ -2,8 +2,7 @@
 
 const url =
   'http://18.193.250.181:1337/api/people?populate=*&pagination[pageSize]=100'
-//'http://18.193.250.181:1337/api/people?populate=*&pagination[pageSize]=100' // pagination
-const countriesUrl = 'http://18.193.250.181:1337/api/countries'
+const onlyCountriesUrl = 'http://18.193.250.181:1337/api/countries'
 const visitors = document.getElementById('visitors')
 const signups = document.getElementById('signups')
 const signupCountries = document.getElementById('signupCountries')
@@ -11,8 +10,6 @@ const howManyNotCap = document.getElementById('howManyNotCap')
 const users = document.querySelector('.users')
 const search = document.querySelector('.searchBar input[type=search]')
 const select = document.querySelector('.searchBar select')
-
-// http://18.193.250.181:1337/api/people?populate=*&pagination[page]=1
 
 // How many visitors
 
@@ -45,22 +42,34 @@ howManyUsersInTotal(url)
 // How many registrations with country
 
 const howManyRegistrationsWithCountries = async () => {
-  // TODO
   try {
     const res = await fetch(url)
     const data = await res.json()
 
+    let countries = []
+
     if (data.data.length > 0) {
-      // console.log(data)
-      data.data.forEach(item => {})
+      data.data.forEach(item => {
+        if (item.attributes.country) {
+          if (item.attributes.country.data) {
+            countries.push(item.attributes.country.data.attributes.country)
+          }
+        }
+      })
     }
+
+    countries = countries.filter((item, index) => {
+      return countries.indexOf(item) == index
+    })
+
+    signupCountries.textContent = countries.length
   } catch (err) {
     console.log(err.message)
     signupCountries.textContent = err.message || `Failed to fetch`
   }
 }
 
-howManyRegistrationsWithCountries(url) // TODO
+howManyRegistrationsWithCountries(url)
 
 // How many first names or last names are not capitalized
 
@@ -89,7 +98,7 @@ const howManyNotCapitalized = async () => {
   }
 }
 
-howManyNotCapitalized(url) // sum every
+howManyNotCapitalized(url)
 
 // Get users from the server
 
@@ -177,15 +186,15 @@ const displayCountries = async url => {
   }
 }
 
-displayCountries(countriesUrl)
+displayCountries(onlyCountriesUrl)
 
-// Select country
+// Search by country
 
 select.addEventListener('change', e => {
   searchUser(e)
 })
 
-// Search firstname, lastname
+// Search by firstname and lastname
 
 search.addEventListener('keyup', e => {
   searchUser(e)
@@ -212,8 +221,6 @@ const searchUser = e => {
 
     finalSearchQuery += `&filters[$and][0][first_name][$containsi]=${firstNameQuery}&filters[$and][1][last_name][$containsi]=${lastNameQuery}`
   }
-
-  console.log(`${url}${finalSearchQuery}`)
 
   return getUsers(`${url}${finalSearchQuery}`)
 }
