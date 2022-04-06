@@ -39,7 +39,7 @@ const howManyUsersInTotal = async () => {
 
 howManyUsersInTotal(url)
 
-// How many registrations with country
+// How many registrations with unique country // TODO Šita funkcija veikia ne iki galo teisingai, kadangi nėra galimybės paiimti visų vartotojų, tik 100 pirmų. Kitam puslapyje su kitais vartotojais rodys kitą statistiką.
 
 const howManyRegistrationsWithCountries = async () => {
   try {
@@ -50,10 +50,8 @@ const howManyRegistrationsWithCountries = async () => {
 
     if (data.data.length > 0) {
       data.data.forEach(item => {
-        if (item.attributes.country) {
-          if (item.attributes.country.data) {
-            countries.push(item.attributes.country.data.attributes.country)
-          }
+        if (item.attributes.country.data) {
+          countries.push(item.attributes.country.data.attributes.country)
         }
       })
     }
