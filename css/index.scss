@@ -65,6 +65,7 @@ body {
             min-width: 50%;
             max-width: 80%;
             margin:0 auto;
+            padding-bottom:2rem;
 
             .primary  {
                 align-self: flex-end;
@@ -169,4 +170,14 @@ body {
 
 .hide {
     display:none !important;
+}
+
+@media (max-width:640px) {
+    body {
+        flex-direction: column;
+
+        section {
+            width: 100%;
+        }
+    }
 }

@@ -2,14 +2,14 @@
 
 const activitiesUrl = 'http://18.193.250.181:1337/api/activities?populate=*'
 const countriesUrl = 'http://18.193.250.181:1337/api/countries?populate=*'
-const peopleUrl = 'http://18.193.250.181:1337/api/people?populate=*'
+const getPeopleUrl = 'http://18.193.250.181:1337/api/people?populate=*'
 const deletePeopleUrl = 'http://18.193.250.181:1337/api/people/'
 
-const rightSideContent = document.querySelector('#right  .content')
+const rightSideContent = document.querySelector('#right .content')
 const formActivities = document.forms.activitiesForm
 const formDetails = document.forms.details
-const formPagination = document.querySelector('#right  .content  .pagination')
-const formQuestion = document.querySelector('#right  .content  h3')
+const formPagination = document.querySelector('#right .content .pagination')
+const formQuestion = document.querySelector('#right .content h3')
 const greenSeperator = document.querySelector('#right .content .greenHr')
 const detailsConfirmation = document.querySelector('.detailsConfirmation')
 const lastNote = document.getElementById('lastNote')
@@ -129,7 +129,7 @@ formDetails.addEventListener('submit', e => {
 
   const postDetails = async () => {
     try {
-      const res = await fetch(peopleUrl, {
+      const res = await fetch(getPeopleUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -149,29 +149,50 @@ formDetails.addEventListener('submit', e => {
 
       localStorage.setItem('userID', data.data.id)
 
-      console.log(data)
-    } catch (err) {
-      console.log(err.message)
-      rightSideContent.innerHTML = err.message || 'Something went wrong'
-    }
-  }
+      // Confirm or detele details
 
-  postDetails()
+      const confirmOrDeleteDetails = async id => {
+        try {
+          const res = await fetch(
+            `http://18.193.250.181:1337/api/people?filters[id][$eq]=${localStorage.getItem(
+              'userID'
+            )}`
+          )
+          const data = await res.json()
 
-  // Confirm or detele details
+          if (data.data.length > 0) {
+            confirmUser(data.data)
 
-  const confirmOrDeleteDetails = async () => {
-    try {
-      const res = await fetch(
-        `${peopleUrl}?filters[id][$eq]=${localStorage.getItem('userID')}`
-      )
-      const data = await res.json()
+            formDetails.classList.add('hide')
+            detailsConfirmation.classList.remove('hide')
+          } else {
+            rightSideContent.innerHTML = `Request impossible`
+          }
+        } catch (err) {
+          console.log(err.message)
+          rightSideContent.innerHTML = err.message || 'Something went wrong'
+        }
+      }
 
-      if (data.data.length > 0) {
-        console.log(data.data)
-        confirmUser(data.data)
-      } else {
-        rightSideContent.innerHTML = `Request impossible`
+      confirmOrDeleteDetails()
+
+      // Display user details
+
+      const confirmUser = data => {
+        const confirmFirstName = document.getElementById('confirmFirstName')
+        const confirmLastName = document.getElementById('confirmLastName')
+        const confirmEmail = document.getElementById('confirmEmail')
+        const confirmCountry = document.getElementById('confirmCountry')
+
+        formPagination.textContent = '3/5'
+        formQuestion.textContent = 'Are these details correct?'
+
+        data.forEach(item => {
+          confirmFirstName.textContent = item.attributes.first_name
+          confirmLastName.textContent = item.attributes.last_name
+          confirmEmail.textContent = item.attributes.email
+          confirmCountry.textContent = localStorage.getItem('CountryName')
+        })
       }
     } catch (err) {
       console.log(err.message)
@@ -179,62 +200,41 @@ formDetails.addEventListener('submit', e => {
     }
   }
 
-  confirmOrDeleteDetails()
-
-  formDetails.classList.add('hide')
-  detailsConfirmation.classList.remove('hide')
-
-  // Display user details
-
-  const confirmUser = data => {
-    const confirmFirstName = document.getElementById('confirmFirstName')
-    const confirmLastName = document.getElementById('confirmLastName')
-    const confirmEmail = document.getElementById('confirmEmail')
-    const confirmCountry = document.getElementById('confirmCountry')
-
-    formPagination.textContent = '3/5'
-    formQuestion.textContent = 'Are these details correct?'
-
-    data.forEach(item => {
-      confirmFirstName.textContent = item.attributes.first_name
-      confirmLastName.textContent = item.attributes.last_name
-      confirmEmail.textContent = item.attributes.email
-      confirmCountry.textContent = localStorage.getItem('CountryName')
-    })
-  }
-
-  const deleteUserBtn = document.getElementById('deleteUser')
-  const confirmUserBtn = document.getElementById('confirmUser')
-
-  // Delete user
-
-  deleteUserBtn.addEventListener('click', async () => {
-    try {
-      const res = await fetch(
-        `${deletePeopleUrl}${localStorage.getItem('userID')}`,
-        {
-          method: 'DELETE'
-        }
-      )
-
-      const data = await res.json()
-      console.log(data)
-    } catch (err) {
-      console.log(err.message)
-      rightSideContent.innerHTML = err.message || 'Something went wrong'
-    }
-  })
-
-  // Confirm User
-
-  confirmUserBtn.addEventListener('click', () => {
-    formPagination.textContent = '4/5'
-    detailsConfirmation.classList.add('hide')
-    formQuestion.textContent = 'Please check your email'
-    lastNote.classList.remove('hide')
-    greenSeperator.style.width = '100%'
-  })
+  postDetails()
 })
 
-// http://18.193.250.181:1337/api/people?filters[id][$eq]=11614
-// http://18.193.250.181:1337/api/people?&filters[first_name][$containsi]=aud
+const deleteUserBtn = document.getElementById('deleteUser')
+const confirmUserBtn = document.getElementById('confirmUser')
+
+// Delete user
+
+deleteUserBtn.addEventListener('click', async () => {
+  try {
+    const res = await fetch(
+      `${deletePeopleUrl}${localStorage.getItem('userID')}`,
+      {
+        method: 'DELETE'
+      }
+    )
+
+    const data = await res.json()
+
+    detailsConfirmation.classList.add('hide')
+    formDetails.classList.remove('hide')
+    formPagination.textContent = '2/5'
+    formQuestion.textContent = 'Please fill in your details'
+  } catch (err) {
+    console.log(err.message)
+    rightSideContent.innerHTML = err.message || 'Something went wrong'
+  }
+})
+
+// Confirm User
+
+confirmUserBtn.addEventListener('click', () => {
+  formPagination.textContent = '4/5'
+  detailsConfirmation.classList.add('hide')
+  formQuestion.textContent = 'Please check your email'
+  lastNote.classList.remove('hide')
+  greenSeperator.style.width = '100%'
+})

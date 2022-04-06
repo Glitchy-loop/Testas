@@ -72,6 +72,7 @@ body #right .content {
   min-width: 50%;
   max-width: 80%;
   margin: 0 auto;
+  padding-bottom: 2rem;
 }
 
 body #right .content .primary {
@@ -176,5 +177,17 @@ body #right .content .detailsConfirmation .buttons :first-child {
 
 .hide {
   display: none !important;
+}
+
+@media (max-width: 640px) {
+  body {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  body section {
+    width: 100%;
+  }
 }
 /*# sourceMappingURL=index.css.map */
