@@ -2,9 +2,62 @@
 
 const url = 'http://18.193.250.181:1337/api/people?populate=*'
 const countriesUrl = 'http://18.193.250.181:1337/api/countries'
+const visitors = document.getElementById('visitors')
+const signups = document.getElementById('signups')
+const signupCountries = document.getElementById('signupCountries')
 const users = document.querySelector('.users')
+const search = document.querySelector('.searchBar input[type=search]')
 
 // http://18.193.250.181:1337/api/people?populate=*&pagination[page]=1
+
+// How many visitors
+
+const howManyVisitors = () => {
+  visitors.textContent = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000
+}
+
+howManyVisitors()
+
+// How many users in total
+
+const howManyUsersInTotal = async () => {
+  try {
+    const res = await fetch(url)
+    const data = await res.json()
+
+    if (data.data.length > 0) {
+      signups.textContent = data.meta.pagination.total
+    } else {
+      signups.textContent = `No data`
+    }
+  } catch (error) {
+    console.log(error)
+    users.textContent = err.message || `Failed to fetch`
+  }
+}
+
+howManyUsersInTotal(url)
+
+// How many registrations with country
+
+const howManyRegistrationsWithCountries = async () => {
+  try {
+    const res = await fetch(url)
+    const data = await res.json()
+
+    if (data.data.length > 0) {
+      console.log(data)
+      data.data.forEach(item => {
+        console.log(item.attributes.country.data.attributes.country)
+      })
+    }
+  } catch (err) {
+    console.log(err.message)
+    signupCountries.textContent = err.message || `Failed to fetch`
+  }
+}
+
+howManyRegistrationsWithCountries(url)
 
 // Get users from the server
 
@@ -13,15 +66,15 @@ const getUsers = async url => {
     const res = await fetch(url)
     const data = await res.json()
 
-    console.log(data.data)
+    // createPagination(data.meta.pagination.pageCount)
 
     if (data.data.length > 0) {
       displayUsers(data.data)
     } else {
-      users.textContent = `No data to display`
+      users.textContent = `Such user doesn't exist`
     }
-  } catch (err) {
-    console.log(err.message)
+  } catch (error) {
+    console.log(error)
     users.textContent = err.message || `Failed to fetch`
   }
 }
@@ -31,6 +84,7 @@ getUsers(url)
 // Display user data
 
 const displayUsers = async data => {
+  users.innerHTML = ''
   data.forEach(user => {
     const div = document.createElement('div')
     div.className = 'user'
@@ -54,15 +108,21 @@ const displayUsers = async data => {
     const country = document.createElement('div')
     country.className = 'country'
 
-    if (!user.attributes.country.data) {
-      country.textContent = `No country specified`
-    } else {
-      country.textContent = user.attributes.country.data.attributes.country
-    }
+    // if (
+    //   !user.attributes.country.data ||
+    //   !user.attributes.country ||
+    //   !user.attributes.country.data.attributes.country ||
+    //   !user.attributes.country.data.attributes ||
+    //   !user.attributes
+    // ) {
+    //   country.textContent = `No country specified`
+    // } else {
+    //   country.textContent = user.attributes.country.data.attributes.country
+    // }
 
     details.append(fullName, email)
 
-    div.append(initials, details, country)
+    div.append(initials, details)
 
     users.append(div)
   })
@@ -87,8 +147,24 @@ const displayCountries = async url => {
     })
   } catch (err) {
     console.log(err.message)
-    rightSideContent.innerHTML = err.message || 'Something went wrong'
+    alert(err.message || 'Something went wrong')
   }
 }
 
 displayCountries(countriesUrl)
+
+// Pagination
+
+search.addEventListener('keyup', e => {
+  let searchQuery = e.target.value.trim()
+
+  console.log(
+    `${url}?filters[first_name][$containsi]=${searchQuery}[$or]filters[last_name][$containsi]=${searchQuery}`
+  )
+  return getUsers(
+    `${url}?filters[first_name][$containsi]=${searchQuery}[$or]?&filters[last_name][$containsi]=${searchQuery}`
+  )
+})
+
+// http://18.193.250.181:1337/api/people?populate=*?
+// filters[first_name][$containsi]=a&filters[last_name][$containsi]=smith
