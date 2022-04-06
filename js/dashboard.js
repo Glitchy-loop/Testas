@@ -190,36 +190,38 @@ displayCountries(onlyCountriesUrl)
 
 // Search by country
 
-select.addEventListener('change', e => {
-  searchUser(e)
+select.addEventListener('change', () => {
+  searchUser()
 })
 
 // Search by firstname and lastname
 
-search.addEventListener('keyup', e => {
-  searchUser(e)
+search.addEventListener('keyup', () => {
+  searchUser()
 })
 
 // Search
 
-const searchUser = e => {
+const searchUser = () => {
   let countryOption = select.value
 
-  let searchQuery = e.target.value
+  let searchQuery = search.value
 
   let splittedSearchQuery = searchQuery.trim().split(' ')
 
   let finalSearchQuery = `&filters[country][country][$eq]=${countryOption}`
 
-  if (splittedSearchQuery.length === 1) {
-    let firstNameQuery = splittedSearchQuery[0]
+  if (splittedSearchQuery.length > 0) {
+    if (splittedSearchQuery.length === 1) {
+      let firstNameQuery = splittedSearchQuery[0]
 
-    finalSearchQuery += `&filters[$or][0][first_name][$containsi]=${firstNameQuery}&filters[$or][1][last_name][$containsi]=${firstNameQuery}`
-  } else if (splittedSearchQuery.length > 1) {
-    let firstNameQuery = splittedSearchQuery[0]
-    let lastNameQuery = splittedSearchQuery[1]
+      finalSearchQuery += `&filters[$or][0][first_name][$containsi]=${firstNameQuery}&filters[$or][1][last_name][$containsi]=${firstNameQuery}`
+    } else if (splittedSearchQuery.length > 1) {
+      let firstNameQuery = splittedSearchQuery[0]
+      let lastNameQuery = splittedSearchQuery[1]
 
-    finalSearchQuery += `&filters[$and][0][first_name][$containsi]=${firstNameQuery}&filters[$and][1][last_name][$containsi]=${lastNameQuery}`
+      finalSearchQuery += `&filters[$and][0][first_name][$containsi]=${firstNameQuery}&filters[$and][1][last_name][$containsi]=${lastNameQuery}`
+    }
   }
 
   return getUsers(`${url}${finalSearchQuery}`)

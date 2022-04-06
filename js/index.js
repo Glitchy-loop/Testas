@@ -1,9 +1,11 @@
-// Consts, variables
+// URLs
 
 const activitiesUrl = 'http://18.193.250.181:1337/api/activities?populate=*'
 const countriesUrl = 'http://18.193.250.181:1337/api/countries?populate=*'
 const getPeopleUrl = 'http://18.193.250.181:1337/api/people?populate=*'
 const deletePeopleUrl = 'http://18.193.250.181:1337/api/people/'
+
+// Consts, variables
 
 const rightSideContent = document.querySelector('#right .content')
 const formActivities = document.forms.activitiesForm
