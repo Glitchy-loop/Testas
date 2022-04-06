@@ -35,8 +35,6 @@ const displayUsers = async data => {
     const div = document.createElement('div')
     div.className = 'user'
 
-    console.log(`cia` + user.attributes)
-
     const initials = document.createElement('div')
     initials.className = 'initials'
     initials.textContent =
@@ -56,8 +54,7 @@ const displayUsers = async data => {
     const country = document.createElement('div')
     country.className = 'country'
 
-    // console.log(user.attributes.country.data.attributes.country)
-    if (user.attributes.country.data.attributes.country == null) {
+    if (!user.attributes.country.data) {
       country.textContent = `No country specified`
     } else {
       country.textContent = user.attributes.country.data.attributes.country
