@@ -60,7 +60,7 @@ const howManyRegistrationsWithCountries = async () => {
   }
 }
 
-// howManyRegistrationsWithCountries(url) // TODO
+howManyRegistrationsWithCountries(url) // TODO
 
 // How many first names or last names are not capitalized
 
@@ -72,27 +72,15 @@ const howManyNotCapitalized = async () => {
     if (data.data.length > 0) {
       let count = 0
 
-      // for (let i = 0; i < data.data.length; i++) {
-      //   if (
-      //     data.data[i].attributes.first_name ===
-      //     data.data[i].attributes.first_name.toLowerCase()
-      //   ) {
-      //     count++
-      //     console.log(data.data[i].attributes.first_name + ': ' + true)
-      //   }
-      // }
-
       data.data.forEach(item => {
         if (
           item.attributes.first_name[0] ===
           item.attributes.first_name[0].toLowerCase()
         ) {
           count++
-          console.log(item.attributes.first_name)
         }
       })
 
-      console.log(count)
       howManyNotCap.textContent = count
     }
   } catch (err) {
