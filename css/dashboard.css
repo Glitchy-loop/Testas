@@ -36,6 +36,10 @@ header .container {
   padding-right: 1rem;
 }
 
+header .container .fa-folder-closed {
+  color: red;
+}
+
 header .container i {
   font-size: 1.5rem;
   color: #424add;

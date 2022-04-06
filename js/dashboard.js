@@ -1,12 +1,16 @@
 // Consts, variables
 
-const url = 'http://18.193.250.181:1337/api/people?populate=*'
+const url =
+  'http://18.193.250.181:1337/api/people?populate=*&pagination[pageSize]=100'
+//'http://18.193.250.181:1337/api/people?populate=*&pagination[pageSize]=100' // pagination
 const countriesUrl = 'http://18.193.250.181:1337/api/countries'
 const visitors = document.getElementById('visitors')
 const signups = document.getElementById('signups')
 const signupCountries = document.getElementById('signupCountries')
+const howManyNotCap = document.getElementById('howManyNotCap')
 const users = document.querySelector('.users')
 const search = document.querySelector('.searchBar input[type=search]')
+const select = document.querySelector('.searchBar select')
 
 // http://18.193.250.181:1337/api/people?populate=*&pagination[page]=1
 
@@ -41,15 +45,14 @@ howManyUsersInTotal(url)
 // How many registrations with country
 
 const howManyRegistrationsWithCountries = async () => {
+  // TODO
   try {
     const res = await fetch(url)
     const data = await res.json()
 
     if (data.data.length > 0) {
-      console.log(data)
-      data.data.forEach(item => {
-        console.log(item.attributes.country.data.attributes.country)
-      })
+      // console.log(data)
+      data.data.forEach(item => {})
     }
   } catch (err) {
     console.log(err.message)
@@ -57,7 +60,48 @@ const howManyRegistrationsWithCountries = async () => {
   }
 }
 
-howManyRegistrationsWithCountries(url)
+// howManyRegistrationsWithCountries(url) // TODO
+
+// How many first names or last names are not capitalized
+
+const howManyNotCapitalized = async () => {
+  try {
+    const res = await fetch(url)
+    const data = await res.json()
+
+    if (data.data.length > 0) {
+      let count = 0
+
+      // for (let i = 0; i < data.data.length; i++) {
+      //   if (
+      //     data.data[i].attributes.first_name ===
+      //     data.data[i].attributes.first_name.toLowerCase()
+      //   ) {
+      //     count++
+      //     console.log(data.data[i].attributes.first_name + ': ' + true)
+      //   }
+      // }
+
+      data.data.forEach(item => {
+        if (
+          item.attributes.first_name[0] ===
+          item.attributes.first_name[0].toLowerCase()
+        ) {
+          count++
+          console.log(item.attributes.first_name)
+        }
+      })
+
+      console.log(count)
+      howManyNotCap.textContent = count
+    }
+  } catch (err) {
+    console.log(err.message)
+    howManyNotCap.textContent = err.message || `Failed to fetch`
+  }
+}
+
+howManyNotCapitalized(url) // sum every
 
 // Get users from the server
 
@@ -108,21 +152,15 @@ const displayUsers = async data => {
     const country = document.createElement('div')
     country.className = 'country'
 
-    // if (
-    //   !user.attributes.country.data ||
-    //   !user.attributes.country ||
-    //   !user.attributes.country.data.attributes.country ||
-    //   !user.attributes.country.data.attributes ||
-    //   !user.attributes
-    // ) {
-    //   country.textContent = `No country specified`
-    // } else {
-    //   country.textContent = user.attributes.country.data.attributes.country
-    // }
+    if (user.attributes.country.data) {
+      country.textContent = user.attributes.country.data.attributes.country
+    } else {
+      country.textContent = 'Not specified'
+    }
 
     details.append(fullName, email)
 
-    div.append(initials, details)
+    div.append(initials, details, country)
 
     users.append(div)
   })
@@ -153,18 +191,41 @@ const displayCountries = async url => {
 
 displayCountries(countriesUrl)
 
-// Pagination
+// Select country
 
-search.addEventListener('keyup', e => {
-  let searchQuery = e.target.value.trim()
-
-  console.log(
-    `${url}?filters[first_name][$containsi]=${searchQuery}[$or]filters[last_name][$containsi]=${searchQuery}`
-  )
-  return getUsers(
-    `${url}?filters[first_name][$containsi]=${searchQuery}[$or]?&filters[last_name][$containsi]=${searchQuery}`
-  )
+select.addEventListener('change', e => {
+  searchUser(e)
 })
 
-// http://18.193.250.181:1337/api/people?populate=*?
-// filters[first_name][$containsi]=a&filters[last_name][$containsi]=smith
+// Search firstname, lastname
+
+search.addEventListener('keyup', e => {
+  searchUser(e)
+})
+
+// Search
+
+const searchUser = e => {
+  let countryOption = select.value
+
+  let searchQuery = e.target.value
+
+  let splittedSearchQuery = searchQuery.trim().split(' ')
+
+  let finalSearchQuery = `&filters[country][country][$eq]=${countryOption}`
+
+  if (splittedSearchQuery.length === 1) {
+    let firstNameQuery = splittedSearchQuery[0]
+
+    finalSearchQuery += `&filters[$or][0][first_name][$containsi]=${firstNameQuery}&filters[$or][1][last_name][$containsi]=${firstNameQuery}`
+  } else if (splittedSearchQuery.length > 1) {
+    let firstNameQuery = splittedSearchQuery[0]
+    let lastNameQuery = splittedSearchQuery[1]
+
+    finalSearchQuery += `&filters[$and][0][first_name][$containsi]=${firstNameQuery}&filters[$and][1][last_name][$containsi]=${lastNameQuery}`
+  }
+
+  console.log(`${url}${finalSearchQuery}`)
+
+  return getUsers(`${url}${finalSearchQuery}`)
+}
